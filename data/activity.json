@@ -1,0 +1,51 @@
+{
+  "owner": "marek-horvath",
+  "as_of": "2026-10-21",
+  "repositories": [
+    {
+      "name": "algo",
+      "language": "JavaScript",
+      "pushed_at": "2026-10-08T06:59:48Z"
+    },
+    {
+      "name": "Benchmarking-LLM-assignements",
+      "language": "Python",
+      "pushed_at": "2025-12-13T13:16:40Z"
+    },
+    {
+      "name": "cnk",
+      "language": "Vue",
+      "pushed_at": "2026-10-10T08:20:32Z"
+    },
+    {
+      "name": "git",
+      "language": "HTML",
+      "pushed_at": "2026-09-08T11:07:02Z"
+    },
+    {
+      "name": "portfolio",
+      "language": "HTML",
+      "pushed_at": "2026-10-10T13:14:48Z"
+    },
+    {
+      "name": "python",
+      "language": "JavaScript",
+      "pushed_at": "2026-10-17T19:57:41Z"
+    },
+    {
+      "name": "revik",
+      "language": "Vue",
+      "pushed_at": "2026-10-10T13:24:03Z"
+    },
+    {
+      "name": "skupina",
+      "language": "HTML",
+      "pushed_at": "2026-10-10T19:52:14Z"
+    },
+    {
+      "name": "survey-extracting-script",
+      "language": "TeX",
+      "pushed_at": "2026-01-18T15:44:02Z"
+    }
+  ]
+}
