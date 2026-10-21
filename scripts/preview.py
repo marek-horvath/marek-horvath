@@ -19,6 +19,12 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass
 
 
+class QuietServer(ThreadingHTTPServer):
+    def handle_error(self, *_):
+        # A browser closing an asset request during navigation is expected.
+        pass
+
+
 def main():
     PREVIEW.mkdir(exist_ok=True)
     gh = shutil.which("gh") or "C:/Program Files/GitHub CLI/gh.exe"
@@ -38,7 +44,7 @@ def main():
     """
     document = f'<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="/"><style>{css}</style></head><body><main>{rendered}</main></body></html>'
     (PREVIEW / "readme.html").write_text(document, encoding="utf-8")
-    server = ThreadingHTTPServer(("127.0.0.1", 0), partial(QuietHandler, directory=str(ROOT)))
+    server = QuietServer(("127.0.0.1", 0), partial(QuietHandler, directory=str(ROOT)))
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
     base = f"http://127.0.0.1:{server.server_port}"
@@ -52,7 +58,7 @@ def main():
                     page = browser.new_page(viewport=viewport, color_scheme=theme, device_scale_factor=1)
                     page.goto(base + "/.preview/readme.html", wait_until="networkidle")
                     images = page.locator("main img").evaluate_all("items => items.map(i => ({src:i.currentSrc,complete:i.complete,width:i.naturalWidth}))")
-                    assert len(images) == 5 and all(i["complete"] and i["width"] for i in images), images
+                    assert len(images) == 13 and all(i["complete"] and i["width"] for i in images), images
                     # Verify motion in the SVG as embedded by GitHub, not just as a standalone document.
                     hero = page.locator("main img").first
                     first = hero.screenshot()
@@ -86,17 +92,21 @@ def main():
                     }).map(t => t.textContent);
                 }""")
                 assert not clipped, (asset.name, clipped)
-                if page.locator("#background-fade").count():
-                    colors = page.evaluate("""() => {
+                if page.locator("#background-flow").count():
+                    positions = page.evaluate("""() => {
                         const svg = document.querySelector('svg');
                         svg.pauseAnimations();
-                        return [0,4,8,12].map(time => {
+                        return [0,4.5,9,13.5].map(time => {
                             svg.setCurrentTime(time);
-                            return getComputedStyle(document.querySelector('#background-fade')).fill;
+                            return document.querySelector('#palette-flow').gradientTransform.animVal.getItem(0).matrix.e;
                         });
                     }""")
-                    assert len(set(colors)) == 4, (asset.name, "Background did not change color", colors)
-                    print(f"{asset.name}: four background fade colors verified: {colors}")
+                    assert all(a < b for a, b in zip(positions, positions[1:])), (asset.name, "Gradient did not flow right", positions)
+                    print(f"{asset.name}: left-to-right gradient positions: {positions}")
+                    if asset.name in ("hero-dark.svg", "hero-light.svg"):
+                        for time, phase in ((0, "start"), (9, "mid")):
+                            page.evaluate("time => document.querySelector('svg').setCurrentTime(time)", time)
+                            page.locator("svg").screenshot(path=str(PREVIEW / f"palette-{asset.stem}-{phase}.png"))
                 page.close()
             reference = browser.new_page(viewport={"width": 1280, "height": 1000})
             reference.goto("https://marek-horvath.github.io/portfolio/", wait_until="networkidle")

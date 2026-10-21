@@ -41,14 +41,19 @@ def main():
             svg = ET.parse(path).getroot()
             assert svg.tag == "{http://www.w3.org/2000/svg}svg"
             assert svg.get("viewBox") and svg.find("{http://www.w3.org/2000/svg}title") is not None
+            ids = {element.get("id") for element in svg.iter() if element.get("id")}
             for element in svg.iter():
                 tag = element.tag.rsplit("}", 1)[-1]
                 if tag in {"script", "foreignObject", "image", "iframe", "a"}:
                     errors.append(f"Unsupported/external SVG element {tag}: {path.name}")
                 for key, value in element.attrib.items():
-                    if key.lower().startswith("on") or "href" in key or "url(" in value:
+                    if key.lower().startswith("on") or "href" in key:
                         errors.append(f"Active or external SVG content: {path.name}")
-            if re.search(r"\{(?:bg|ink|muted|line|accent|soft|diagram)\}", path.read_text(encoding="utf-8")):
+                    if "url(" in value:
+                        local = re.fullmatch(r"url\(#([A-Za-z][\w.-]*)\)", value)
+                        if not local or local.group(1) not in ids:
+                            errors.append(f"External or unresolved SVG paint reference: {path.name}")
+            if re.search(r"\{(?:bg|ink|muted|line|accent|soft|diagram|hero_ink|hero_muted)\}", path.read_text(encoding="utf-8")):
                 errors.append(f"Unresolved theme: {path.name}")
         except (ET.ParseError, AssertionError) as error:
             errors.append(f"Invalid SVG {path.name}: {error}")

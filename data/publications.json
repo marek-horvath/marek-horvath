@@ -1,0 +1,47 @@
+[
+  {
+    "id": "learning-analytics",
+    "kind": "journal",
+    "title": "Personalized Learning Analytics Through Static Code Analysis in Computer Science Education",
+    "authors": "Marek Horváth · Emília Pietriková · Filip Gurbáľ",
+    "venue": "Acta Informatica Pragensia",
+    "details": "2026 · 15(1), 54–71",
+    "url": "https://doi.org/10.18267/j.aip.283"
+  },
+  {
+    "id": "llm-benchmark",
+    "kind": "journal",
+    "title": "Benchmarking AI Models for Grading CS Assignments Across Multiple Domains",
+    "authors": "Marek Horváth · Lukáš Tomaščík · Nikola Geciová · Norbert Ádám · Emília Pietriková",
+    "venue": "Acta Polytechnica Hungarica",
+    "details": "2026 · 23(5), 207–226",
+    "url": "https://doi.org/10.12700/APH.23.5.2026.5.11"
+  },
+  {
+    "id": "programmer-proficiency",
+    "kind": "journal",
+    "title": "Profiling programmer proficiency using static analysis",
+    "authors": "Emília Pietriková · Marek Horváth · Anton Baláž",
+    "venue": "PeerJ Computer Science",
+    "details": "2026 · 12:e3981",
+    "url": "https://doi.org/10.7717/peerj-cs.3981"
+  },
+  {
+    "id": "attribution-survey",
+    "kind": "preprint",
+    "title": "Bridging Behavioral Biometrics and Source Code Stylometry: A Survey of Programmer Attribution",
+    "authors": "Marek Horváth · Emília Pietriková · Diomidis Spinellis",
+    "venue": "arXiv preprint",
+    "details": "2026 · arXiv:2603.11150",
+    "url": "https://arxiv.org/abs/2603.11150"
+  },
+  {
+    "id": "authorship-evidence",
+    "kind": "preprint",
+    "title": "Evaluating Static and Process Evidence for Code Authorship in Programming Education",
+    "authors": "Marek Horváth · Sole author",
+    "venue": "arXiv preprint",
+    "details": "2026 · arXiv:2607.07400",
+    "url": "https://arxiv.org/abs/2607.07400"
+  }
+]

@@ -1,6 +1,6 @@
 # Profile maintenance
 
-The README uses GitHub-supported HTML/Markdown, a self-contained animated SVG header, and four individually clickable SVG link buttons. It has dark/light and desktop/mobile variants, no runtime JavaScript, no external fonts, and no third-party widgets.
+The README uses GitHub-supported HTML/Markdown, a self-contained animated SVG header, four contact buttons, individually clickable publication panels, and a grouped toolkit panel. Each visual has dark/light and desktop/mobile variants where needed. There is no runtime JavaScript, external font, or third-party widget.
 
 ## Content and design sources
 
@@ -18,9 +18,11 @@ The journal articles are presented with their actual journal names and bibliogra
 
 ## Animation and links
 
-The header background smoothly fades through four colors in a continuous 16-second loop: navy, blue, violet, and teal in dark mode; ice blue, lavender, mint, and pale blue in light mode. SVG `animate` changes the full background fill with eased transitions and a matching first/last color, so the loop has no jump. Three signals also move through the decorative network using SVG `animateMotion`. The network does not encode measurements. There is no JavaScript, external media, CSS in the README, or changing claim about GitHub activity. The README's `<picture>` selects a separately generated still SVG when `prefers-reduced-motion: reduce` is enabled. This works even in browsers that do not propagate motion preferences into SVG image documents. SVG CSS additionally hides moving elements for direct SVG viewing. The complete static header remains visible.
+The header contains a continuous, spatial color gradient: blue, violet, rose, copper, teal, and cyan, with a lighter palette for light mode. SVG `animateTransform` translates the gradient from left to right at a constant speed over 18 seconds. Its repeating gradient period and matching first/last color make the loop seamless. This is moving color across the image, rather than fading a uniform fill. Three signals also move through the decorative network using SVG `animateMotion`. The network does not encode measurements. There is no JavaScript, external media, CSS in the README, or changing claim about GitHub activity. The README's `<picture>` selects a separately generated still SVG when `prefers-reduced-motion: reduce` is enabled. This works even in browsers that do not propagate motion preferences into SVG image documents. SVG CSS additionally hides moving elements for direct SVG viewing. The complete static gradient header remains visible.
 
 Each contact button is a separate SVG image inside an ordinary link. This preserves four real click targets in GitHub's renderer. Alt text names each destination. The buttons wrap into two rows on narrow screens. Their SVGs carry icons, restrained borders, and theme-matched colors rather than relying on unsupported README button styling.
+
+Research uses two gradient section headers, followed by three journal panels and two preprint panels. Every publication panel has its own ordinary DOI/arXiv link; it is not an unclickable composite image. `data/publications.json` stores the already verified titles, author strings, and bibliographic metadata. The panels retain that text in their accessible SVG descriptions and the README image alt text. A collapsed text version below the visuals preserves selectable citations and publication links if images do not load. Publication panels and the toolkit share the palette through restrained color strips; their reading surfaces stay neutral. The toolkit uses three columns on desktop and three stacked groups on mobile.
 
 The old repository snapshot, activity graphics, network-fetching generator, and daily refresh/write job were removed with the activity section. The remaining workflow checks the assets with read-only permissions on pushes, pull requests, and manual runs. No token, API request, or scheduled commit is needed to animate the header.
 
@@ -36,7 +38,7 @@ python scripts/validate.py
 python scripts/validate.py --links
 ```
 
-`scripts/preview.py` optionally uses Playwright and installed Chrome. It renders the README through GitHub's Markdown API, checks all four mobile/desktop and light/dark layouts, verifies movement in the embedded header, verifies that reduced-motion stops it, and checks SVG text bounds. Screenshots and temporary files stay in ignored `.preview/`. The preview's surrounding stylesheet approximates GitHub; the live profile is checked after deployment as well. Link checks separately report browser/access restrictions such as LinkedIn's nonstandard HTTP 999.
+`scripts/preview.py` optionally uses Playwright and installed Chrome. It renders the README through GitHub's Markdown API, checks all four mobile/desktop and light/dark layouts, verifies movement in the embedded header, verifies that reduced-motion stops it, checks SVG text bounds, and samples gradient transforms over time to verify left-to-right motion. Screenshots and temporary files stay in ignored `.preview/`. The preview's surrounding stylesheet approximates GitHub; the live profile is checked after deployment as well. SVG validation permits only references to defined internal paint servers such as `url(#palette)`, while rejecting external SVG resources. Link checks separately report browser/access restrictions such as LinkedIn's nonstandard HTTP 999.
 
 ## Profile metadata and photo
 

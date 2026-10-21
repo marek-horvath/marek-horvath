@@ -22,16 +22,19 @@ class AssetTests(unittest.TestCase):
                 self.assertIn("prefers-reduced-motion:reduce", source)
                 self.assertFalse(root.findall(".//svg:script", NS))
                 self.assertNotIn("href=", source)
-                fade = root.find("svg:rect[@id='background-fade']/svg:animate", NS)
-                self.assertIsNotNone(fade)
-                self.assertEqual(fade.get("attributeName"), "fill")
-                self.assertEqual(fade.get("dur"), "16s")
-                colors = fade.get("values").split(";")
+                flow = root.find(".//svg:linearGradient[@id='palette-flow']/svg:animateTransform", NS)
+                self.assertIsNotNone(flow)
+                self.assertEqual(flow.get("type"), "translate")
+                self.assertEqual(flow.get("to"), "0 0")
+                self.assertLess(int(flow.get("from").split()[0]), 0)
+                self.assertEqual(flow.get("calcMode"), "linear")
+                colors = generate.PALETTES[theme]
                 self.assertEqual(colors[0], colors[-1])
-                self.assertEqual(len(set(colors)), 4)
+                self.assertEqual(len(set(colors)), 6)
                 still = ET.fromstring(generate.hero(theme, mobile, animated=False))
                 self.assertFalse(still.findall(".//svg:animateMotion", NS))
                 self.assertFalse(still.findall(".//svg:animate", NS))
+                self.assertFalse(still.findall(".//svg:animateTransform", NS))
 
     def test_svg_text_escapes_external_content(self):
         text = generate.text(0, 10, 'A&B <example> "quoted"')
@@ -42,7 +45,7 @@ class AssetTests(unittest.TestCase):
 
     def test_expected_assets_are_small_and_well_formed(self):
         assets = generate.outputs()
-        self.assertEqual(len(assets), 16)
+        self.assertEqual(len(assets), 48)
         for path, source in assets.items():
             self.assertTrue(path.is_relative_to(ROOT / "assets"))
             self.assertLess(len(source.encode("utf-8")), 10_000)
@@ -56,6 +59,16 @@ class AssetTests(unittest.TestCase):
         for phrase in ("selected work", "public repository activity", "public work",
                        "source code. human patterns.", "studying authorship."):
             self.assertNotIn(phrase, readme + hero_text)
+
+    def test_each_publication_panel_keeps_verified_text_and_a_real_link(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        for number, paper in enumerate(generate.PUBLICATIONS, 1):
+            self.assertIn(f'href="{paper["url"]}"', readme)
+            for theme in generate.THEMES:
+                for mobile in (False, True):
+                    root = ET.fromstring(generate.publication(paper, number, theme, mobile))
+                    self.assertEqual(root.find("svg:title", NS).text, paper["title"])
+                    self.assertIn(paper["authors"], root.find("svg:desc", NS).text)
 
 
 if __name__ == "__main__":
