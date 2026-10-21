@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 import sys
 from urllib.error import HTTPError, URLError
+from html import unescape
 from urllib.parse import unquote, urlsplit
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree as ET
@@ -20,7 +21,7 @@ def main():
     errors = []
     urls = set()
     for parts in references():
-        target = next(p for p in parts if p)
+        target = unescape(next(p for p in parts if p))
         parsed = urlsplit(target)
         if parsed.scheme == "https":
             urls.add(target)
@@ -32,7 +33,8 @@ def main():
             path = (ROOT / unquote(parsed.path)).resolve()
             if not path.is_relative_to(ROOT) or not path.is_file():
                 errors.append(f"Missing or out-of-repository file: {target}")
-    for path in (ROOT / "assets").glob("*.svg"):
+    assets = list((ROOT / "assets").glob("*.svg"))
+    for path in assets:
         if path.stat().st_size > 30_000:
             errors.append(f"Oversized SVG: {path.name}")
         try:
@@ -68,7 +70,7 @@ def main():
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
-    print(f"README references and 8 standalone SVGs valid; {len(urls)} HTTPS links found.")
+    print(f"README references and {len(assets)} standalone SVGs valid; {len(urls)} HTTPS links found.")
     return 0
 
 

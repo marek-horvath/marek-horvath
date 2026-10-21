@@ -1,58 +1,62 @@
 # Profile maintenance
 
-The profile uses Markdown and self-contained SVG images. There are no third-party statistics widgets, runtime scripts, externally loaded fonts, or required paid services. Dark/light and desktop/mobile images are selected with GitHub-supported `<picture>` sources. All substantive links and descriptions remain ordinary text if images are unavailable.
+The README uses GitHub-supported HTML/Markdown, a self-contained animated SVG header, and four individually clickable SVG link buttons. It has dark/light and desktop/mobile variants, no runtime JavaScript, no external fonts, and no third-party widgets.
 
 ## Content and design sources
 
-The read-only local portfolio supplied the professional identity, affiliation, location, completed PhD, experience, project descriptions, teaching background, and contact links. Specific sources were `src/components/PortfolioPage.vue` and the Work, Education, Projects, Publications, Teaching, and OtherActivities tabs. Its Fraunces/Plus Jakarta typography, navy `#10233d` and `#163a66`, blue `#2c5ea8`, ice `#eef6ff`, and connected-particle motif informed the design. SVGs use Georgia/Segoe UI fallbacks so they remain portable without font downloads. The tree motif is an illustration of source code structure, not a visualization of research results. Motion was deliberately omitted to keep reading calm and rendering predictable.
+The read-only local portfolio supplied the professional identity, affiliation, location, experience, research interests, teaching background, and contact links. Sources were `src/components/PortfolioPage.vue` and its Work, Education, Projects, Publications, Teaching, and OtherActivities tabs. Its serif heading, navy/ice palette, and connected-particle motif informed the profile design. The SVGs use Georgia/Segoe UI fallbacks without downloading fonts.
 
-Public repository READMEs and file trees were inspected through GitHub's API on October 21, 2026. Research links were checked against [arXiv](https://arxiv.org/abs/2603.11150), [the publisher's ICPEC record](https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.ICPEC.2024.4), [Crossref's ICETA record](https://api.crossref.org/works/10.1109/ICETA67772.2025.11280212), and [Zenodo](https://zenodo.org/records/18641274). The survey's published preprint title differs from the portfolio; the README uses the arXiv title and author order, and describes it as a preprint. A benchmark manuscript's acceptance status is not claimed because the repository and portfolio describe different stages.
+The October 21, 2026 revision removes the introductory slogans, project showcase, and public repository activity display. The research selection prioritizes the survey with Diomidis Spinellis, the sole-author preprint, and three journal articles. Titles, authors, and publication details were checked against these primary records:
 
-## Recommended pins, in order
+- [arXiv:2603.11150 — survey with Emília Pietriková and Diomidis Spinellis](https://arxiv.org/abs/2603.11150)
+- [arXiv:2607.07400 — sole-author code authorship study](https://arxiv.org/abs/2607.07400)
+- [Acta Informatica Pragensia — personalized learning analytics](https://doi.org/10.18267/j.aip.283)
+- [Acta Polytechnica Hungarica — AI grading benchmark](https://acta.uni-obuda.hu/Issue169.html), DOI [10.12700/APH.23.5.2026.5.11](https://doi.org/10.12700/APH.23.5.2026.5.11)
+- [PeerJ Computer Science — programmer proficiency](https://doi.org/10.7717/peerj-cs.3981), with metadata confirmed through [Crossref](https://api.crossref.org/works/10.7717/peerj-cs.3981)
 
-| Order | Repository | Reason |
-| --- | --- | --- |
-| 1 | [survey-extracting-script](https://github.com/marek-horvath/survey-extracting-script) | The clearest research identity: programmer attribution, a reusable Python analyzer, curated bibliography, and a permanently archived artifact. |
-| 2 | [Benchmarking-LLM-assignements](https://github.com/marek-horvath/Benchmarking-LLM-assignements) | Research implementation with local-model grading, prompt templates, and evaluation outputs. Keep the repository's existing spelling in links. |
-| 3 | [python](https://github.com/marek-horvath/python) | Substantial teaching material with bilingual course content, practical examples, and a published course website. |
-| 4 | [algo](https://github.com/marek-horvath/algo) | Karel online: an interactive teaching tool whose code complements the course materials. A setup/usage README would strengthen this pin. |
-| 5 | [cnk](https://github.com/marek-horvath/cnk) | A community application with Vue source, an API, and Docker setup; demonstrates practical delivery outside research. |
-| 6 | [revik](https://github.com/marek-horvath/revik) | A real business website with Vue source and clear project documentation; demonstrates product/UI work. |
+The journal articles are presented with their actual journal names and bibliographic details. Preprints are explicitly separate from published journal articles. No journal quartile is applied to a preprint.
 
-The remaining repositories were also reviewed. `git` is a useful training reference but overlaps teaching pins; `c-student-demo` is a small demonstration; `web` is a fork of BALab's website. `portfolio` and `skupina` expose deployed site output on their default `gh-pages` branches; their live websites are useful profile links, but the six recommendations above expose more implementation or research material. This profile repository does not need a pin because its README is already displayed on the profile. Athena is professionally relevant and featured in the README, but no corresponding public repository was found, so it is not a pin recommendation.
+## Animation and links
 
-To set pins: open [your GitHub profile](https://github.com/marek-horvath), choose **Customize your pins** above the repositories, select the six repositories above, and save. Drag the pinned items into this order. Pinning is a manual GitHub profile operation; this project does not claim to change pins through an unsupported API.
+Three slow signals move through the header's decorative network using SVG `animateMotion`. The network illustrates the profile's technical theme and does not encode measurements. There is no JavaScript, external media, CSS in the README, or changing claim about GitHub activity. The README's `<picture>` selects a separately generated still SVG when `prefers-reduced-motion: reduce` is enabled. This works even in browsers that do not propagate motion preferences into SVG image documents. SVG CSS additionally hides moving elements for direct SVG viewing. The complete static header remains visible.
 
-## Profile metadata and photo
+Each contact button is a separate SVG image inside an ordinary link. This preserves four real click targets in GitHub's renderer. Alt text names each destination. The buttons wrap into two rows on narrow screens. Their SVGs carry icons, restrained borders, and theme-matched colors rather than relying on unsupported README button styling.
 
-`profile.json` contains the verified display name, bio, website, affiliation, and location. `scripts/update_profile.py --apply` uses the authenticated GitHub CLI and the supported user/social-account REST endpoints, checks the account identity first, keeps a local ignored backup of the previous public values, preserves existing social links, and verifies the response. It adds the portfolio's LinkedIn and Google Scholar URLs. No unverified Twitter/X, ORCID, hiring status, or public-email setting is added. This script is intentionally manual and never runs in GitHub Actions.
-
-To change the profile photo: open [Settings → Public profile](https://github.com/settings/profile), choose **Edit → Upload a photo** on your profile picture, select the portfolio's `src/assets/photo.jpg`, adjust the square crop so the face is centered, and save. The portfolio's `public/og-image.jpg` is another available image, but the original portrait is the better starting point. The supported profile metadata endpoint does not upload a profile photo. This project does not change it automatically.
+The old repository snapshot, activity graphics, network-fetching generator, and daily refresh/write job were removed with the activity section. The remaining workflow checks the assets with read-only permissions on pushes, pull requests, and manual runs. No token, API request, or scheduled commit is needed to animate the header.
 
 ## Regenerate and validate
 
-Python 3.11 or newer is sufficient. No dependency installation is required.
+Python 3.11 or newer is sufficient; the generator and normal validation require only the standard library.
 
 ```sh
-python scripts/generate.py                 # Offline render from the saved public snapshot
-python scripts/generate.py --refresh       # Refresh and render; keep dated data on API failure
-python scripts/generate.py --refresh --require-fresh
-python scripts/generate.py --check         # Reproducibility check; no writes or network
+python scripts/generate.py
+python scripts/generate.py --check
 python -m unittest discover -s tests -v
-python scripts/validate.py                 # Local references and SVG restrictions
-python scripts/validate.py --links         # Also check external links
-python scripts/update_profile.py           # Preview intended metadata, no mutation
-python scripts/update_profile.py --apply   # Apply using your authenticated gh session
+python scripts/validate.py
+python scripts/validate.py --links
 ```
 
-The optional `scripts/preview.py` requires Playwright and uses an installed Chrome browser to review GitHub-rendered Markdown at desktop/mobile sizes in both color schemes. Preview files go in the ignored `.preview/` directory and are not profile dependencies. The preview surrounds GitHub's rendered content with approximate GitHub styling; the deployed profile is checked separately. External link checks report access/rate-limit restrictions separately, including LinkedIn's nonstandard HTTP 999 response. Such responses do not independently confirm a link's destination.
+`scripts/preview.py` optionally uses Playwright and installed Chrome. It renders the README through GitHub's Markdown API, checks all four mobile/desktop and light/dark layouts, verifies movement in the embedded header, verifies that reduced-motion stops it, and checks SVG text bounds. Screenshots and temporary files stay in ignored `.preview/`. The preview's surrounding stylesheet approximates GitHub; the live profile is checked after deployment as well. Link checks separately report browser/access restrictions such as LinkedIn's nonstandard HTTP 999.
 
-## Automation and data boundaries
+## Profile metadata and photo
 
-`.github/workflows/profile.yml` validates pushes and pull requests with read-only permissions. At 06:23 UTC daily, or via **Actions → Profile assets → Run workflow**, a separate job refreshes the snapshot with the repository's automatic `GITHUB_TOKEN` and commits only `assets/*.svg` and `data/activity.json`. The checkout action is pinned to a verified commit. No custom token or secret is required. The write job runs only for this repository's `main` branch on scheduled/manual events. Pushes from the bot do not create an update loop; no force push is used. A concurrent remote change causes a normal rejected push rather than overwriting work.
+`profile.json` records the verified display name, bio, portfolio URL, TUKE affiliation, and Košice location. `python scripts/update_profile.py` previews them; `python scripts/update_profile.py --apply` applies them with authenticated GitHub CLI user/social-account REST endpoints. The script checks the account identity, keeps an ignored local backup of previous public values, preserves existing social links, and verifies the result. It never runs in Actions and never stores credentials in the repository.
 
-The only network source is `/users/marek-horvath/repos`, paginated at 100 repositories. Private, forked, archived, disabled, empty, differently owned, and profile repositories are excluded before saving. The snapshot stores only repository name, primary language, last push time, and a UTC retrieval date. It contains neither raw API responses nor private contribution data. Credentials stay in environment variables or GitHub CLI's credential store.
+For a professional photo, open [Settings → Public profile](https://github.com/settings/profile), choose **Edit → Upload a photo** by the profile picture, and use the portfolio's `src/assets/photo.jpg`. Adjust the square crop to center the face and save. The supported profile metadata endpoint does not upload photos.
 
-The activity image lists the six most recently pushed eligible repositories. Its bar is a push-recency indicator over 90 days, not a count of commits or contributions; an empty bar means the latest push was at least 90 days ago. Languages are GitHub's primary-language labels, not skill rankings. Refreshes occur at most daily by schedule. Requests use timeouts, bounded retries for transient errors, and fail quickly on permission/rate-limit responses. Failed refreshes preserve the previous assets and their original date. Live repository links remain available beside the snapshot.
+## Recommended pins
 
-If branch protection rejects the automatic commit, allow the workflow's bot under the repository's chosen policy or use manually reviewed refresh commits. If GitHub disables schedules after prolonged inactivity, re-enable this workflow in the Actions tab.
+All 12 public repositories were reviewed during the original profile audit. The following six prioritize research implementations, teaching tools, and practical applications:
+
+| Order | Repository | Reason |
+| --- | --- | --- |
+| 1 | [survey-extracting-script](https://github.com/marek-horvath/survey-extracting-script) | Programmer attribution research, Python analyzer, curated bibliography, and an archived artifact. |
+| 2 | [Benchmarking-LLM-assignements](https://github.com/marek-horvath/Benchmarking-LLM-assignements) | Research implementation with local-model grading, prompts, and evaluation outputs. The existing repository spelling is preserved. |
+| 3 | [python](https://github.com/marek-horvath/python) | Bilingual lectures, exercises, and a published university course website. |
+| 4 | [algo](https://github.com/marek-horvath/algo) | Karel online: an interactive teaching tool. A setup/usage README would strengthen this pin. |
+| 5 | [cnk](https://github.com/marek-horvath/cnk) | Vue community application, API, and Docker setup. |
+| 6 | [revik](https://github.com/marek-horvath/revik) | A real business website with Vue source and project documentation. |
+
+`git` overlaps the teaching pins, `c-student-demo` is a small demonstration, and `web` is a BALab website fork. `portfolio` and `skupina` expose deployed site output on their default `gh-pages` branches. Athena is relevant research/teaching work, but no corresponding public repository was found. This README already appears directly on the profile, so the profile repository does not need a pin.
+
+To set the pins, open [your profile](https://github.com/marek-horvath), click **Customize your pins**, select these six, save, and drag them into this order. Pinning remains a manual GitHub profile operation.

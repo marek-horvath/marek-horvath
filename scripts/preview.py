@@ -52,12 +52,28 @@ def main():
                     page = browser.new_page(viewport=viewport, color_scheme=theme, device_scale_factor=1)
                     page.goto(base + "/.preview/readme.html", wait_until="networkidle")
                     images = page.locator("main img").evaluate_all("items => items.map(i => ({src:i.currentSrc,complete:i.complete,width:i.naturalWidth}))")
-                    assert len(images) == 2 and all(i["complete"] and i["width"] for i in images), images
+                    assert len(images) == 5 and all(i["complete"] and i["width"] for i in images), images
+                    # Verify motion in the SVG as embedded by GitHub, not just as a standalone document.
+                    hero = page.locator("main img").first
+                    first = hero.screenshot()
+                    page.wait_for_timeout(650)
+                    second = hero.screenshot()
+                    assert first != second, "Embedded hero animation did not move"
+                    page.emulate_media(reduced_motion="reduce")
+                    page.reload(wait_until="networkidle")
+                    still_first = hero.screenshot()
+                    page.wait_for_timeout(650)
+                    still_second = hero.screenshot()
+                    assert still_first == still_second, "Reduced-motion mode did not stop the animation"
+                    page.emulate_media(reduced_motion="no-preference")
+                    page.reload(wait_until="networkidle")
                     overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
                     assert not overflow, f"Horizontal overflow at {viewport}"
                     mode = "mobile" if mobile else "desktop"
                     page.screenshot(path=str(PREVIEW / f"{mode}-{theme}.png"), full_page=True)
-                    reports.append({"mode": mode, "theme": theme, "images": images, "horizontal_overflow": overflow})
+                    reports.append({"mode": mode, "theme": theme, "images": images,
+                                    "animation_moves": True, "reduced_motion_stops": True,
+                                    "horizontal_overflow": overflow})
                     page.close()
             # Check actual browser font metrics, which XML validation cannot detect.
             for asset in sorted((ROOT / "assets").glob("*.svg")):
@@ -76,7 +92,7 @@ def main():
             reference.screenshot(path=str(PREVIEW / "portfolio-reference.png"), full_page=False)
             browser.close()
         print(json.dumps(reports, indent=2))
-        print("Reviewed four layouts, all SVG text bounds, and the live portfolio reference.")
+        print("Reviewed four layouts, embedded animation/reduced motion, SVG text bounds, and the portfolio reference.")
     finally:
         server.shutdown()
     return 0
