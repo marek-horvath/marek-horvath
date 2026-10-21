@@ -40,12 +40,6 @@ My research focuses on **source code analysis, programmer authorship attribution
 
 ### Research
 
-#### arXiv preprints
-
-**[Bridging Behavioral Biometrics and Source Code Stylometry: A Survey of Programmer Attribution](https://arxiv.org/abs/2603.11150)**<br>Marek Horváth · Emília Pietriková · **Diomidis Spinellis**<br>2026 · arXiv:2603.11150 · [Code & bibliography](https://github.com/marek-horvath/survey-extracting-script)
-
-**[Evaluating Static and Process Evidence for Code Authorship in Programming Education](https://arxiv.org/abs/2607.07400)**<br>**Marek Horváth — sole author**<br>2026 · arXiv:2607.07400
-
 #### Journal articles
 
 **[Personalized Learning Analytics Through Static Code Analysis in Computer Science Education](https://doi.org/10.18267/j.aip.283)**<br>Marek Horváth · Emília Pietriková · Filip Gurbáľ<br>2026 · *Acta Informatica Pragensia*, 15(1), 54–71
@@ -53,6 +47,12 @@ My research focuses on **source code analysis, programmer authorship attribution
 **[Benchmarking AI Models for Grading CS Assignments Across Multiple Domains](https://doi.org/10.12700/APH.23.5.2026.5.11)**<br>Marek Horváth · Lukáš Tomaščík · Nikola Geciová · Norbert Ádám · Emília Pietriková<br>2026 · *Acta Polytechnica Hungarica*, 23(5), 207–226
 
 **[Profiling programmer proficiency using static analysis](https://doi.org/10.7717/peerj-cs.3981)**<br>Emília Pietriková · Marek Horváth · Anton Baláž<br>2026 · *PeerJ Computer Science*, 12:e3981
+
+#### arXiv preprints
+
+**[Bridging Behavioral Biometrics and Source Code Stylometry: A Survey of Programmer Attribution](https://arxiv.org/abs/2603.11150)**<br>Marek Horváth · Emília Pietriková · **Diomidis Spinellis**<br>2026 · arXiv:2603.11150 · [Code & bibliography](https://github.com/marek-horvath/survey-extracting-script)
+
+**[Evaluating Static and Process Evidence for Code Authorship in Programming Education](https://arxiv.org/abs/2607.07400)**<br>**Marek Horváth — sole author**<br>2026 · arXiv:2607.07400
 
 [All publications on Google Scholar ↗](https://scholar.google.com/citations?user=9q0s2u4AAAAJ&hl=en)
 

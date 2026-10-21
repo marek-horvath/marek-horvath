@@ -6,7 +6,7 @@ The README uses GitHub-supported HTML/Markdown, a self-contained animated SVG he
 
 The read-only local portfolio supplied the professional identity, affiliation, location, experience, research interests, teaching background, and contact links. Sources were `src/components/PortfolioPage.vue` and its Work, Education, Projects, Publications, Teaching, and OtherActivities tabs. Its serif heading, navy/ice palette, and connected-particle motif informed the profile design. The SVGs use Georgia/Segoe UI fallbacks without downloading fonts.
 
-The October 21, 2026 revision removes the introductory slogans, project showcase, and public repository activity display. The research selection prioritizes the survey with Diomidis Spinellis, the sole-author preprint, and three journal articles. Titles, authors, and publication details were checked against these primary records:
+The October 21, 2026 revision removes the introductory slogans, project showcase, and public repository activity display. Research presents the three journal articles first, followed by the survey with Diomidis Spinellis and the sole-author preprint. Titles, authors, and publication details were checked against these primary records:
 
 - [arXiv:2603.11150 — survey with Emília Pietriková and Diomidis Spinellis](https://arxiv.org/abs/2603.11150)
 - [arXiv:2607.07400 — sole-author code authorship study](https://arxiv.org/abs/2607.07400)
@@ -18,7 +18,7 @@ The journal articles are presented with their actual journal names and bibliogra
 
 ## Animation and links
 
-Three slow signals move through the header's decorative network using SVG `animateMotion`. The network illustrates the profile's technical theme and does not encode measurements. There is no JavaScript, external media, CSS in the README, or changing claim about GitHub activity. The README's `<picture>` selects a separately generated still SVG when `prefers-reduced-motion: reduce` is enabled. This works even in browsers that do not propagate motion preferences into SVG image documents. SVG CSS additionally hides moving elements for direct SVG viewing. The complete static header remains visible.
+The header background smoothly fades through four colors in a continuous 16-second loop: navy, blue, violet, and teal in dark mode; ice blue, lavender, mint, and pale blue in light mode. SVG `animate` changes the full background fill with eased transitions and a matching first/last color, so the loop has no jump. Three signals also move through the decorative network using SVG `animateMotion`. The network does not encode measurements. There is no JavaScript, external media, CSS in the README, or changing claim about GitHub activity. The README's `<picture>` selects a separately generated still SVG when `prefers-reduced-motion: reduce` is enabled. This works even in browsers that do not propagate motion preferences into SVG image documents. SVG CSS additionally hides moving elements for direct SVG viewing. The complete static header remains visible.
 
 Each contact button is a separate SVG image inside an ordinary link. This preserves four real click targets in GitHub's renderer. Alt text names each destination. The buttons wrap into two rows on narrow screens. Their SVGs carry icons, restrained borders, and theme-matched colors rather than relying on unsupported README button styling.
 

@@ -22,8 +22,16 @@ class AssetTests(unittest.TestCase):
                 self.assertIn("prefers-reduced-motion:reduce", source)
                 self.assertFalse(root.findall(".//svg:script", NS))
                 self.assertNotIn("href=", source)
+                fade = root.find("svg:rect[@id='background-fade']/svg:animate", NS)
+                self.assertIsNotNone(fade)
+                self.assertEqual(fade.get("attributeName"), "fill")
+                self.assertEqual(fade.get("dur"), "16s")
+                colors = fade.get("values").split(";")
+                self.assertEqual(colors[0], colors[-1])
+                self.assertEqual(len(set(colors)), 4)
                 still = ET.fromstring(generate.hero(theme, mobile, animated=False))
                 self.assertFalse(still.findall(".//svg:animateMotion", NS))
+                self.assertFalse(still.findall(".//svg:animate", NS))
 
     def test_svg_text_escapes_external_content(self):
         text = generate.text(0, 10, 'A&B <example> "quoted"')

@@ -86,6 +86,17 @@ def main():
                     }).map(t => t.textContent);
                 }""")
                 assert not clipped, (asset.name, clipped)
+                if page.locator("#background-fade").count():
+                    colors = page.evaluate("""() => {
+                        const svg = document.querySelector('svg');
+                        svg.pauseAnimations();
+                        return [0,4,8,12].map(time => {
+                            svg.setCurrentTime(time);
+                            return getComputedStyle(document.querySelector('#background-fade')).fill;
+                        });
+                    }""")
+                    assert len(set(colors)) == 4, (asset.name, "Background did not change color", colors)
+                    print(f"{asset.name}: four background fade colors verified: {colors}")
                 page.close()
             reference = browser.new_page(viewport={"width": 1280, "height": 1000})
             reference.goto("https://marek-horvath.github.io/portfolio/", wait_until="networkidle")

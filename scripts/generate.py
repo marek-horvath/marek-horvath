@@ -16,6 +16,10 @@ THEMES = {
                   accent="#2c5ea8", soft="#e0edfb", diagram="#6486a8"),
 }
 LINKS = {"portfolio": "Portfolio", "scholar": "Scholar", "linkedin": "LinkedIn", "email": "Email"}
+BACKGROUNDS = {
+    "dark": ("#0d1b2a", "#183f58", "#352e58", "#124b4e", "#0d1b2a"),
+    "light": ("#eef6ff", "#e3dcfa", "#d2f0e7", "#d6e7fb", "#eef6ff"),
+}
 
 
 def text(x: int, y: int, value: str, size: int = 16, fill: str = "ink",
@@ -26,12 +30,21 @@ def text(x: int, y: int, value: str, size: int = 16, fill: str = "ink",
             f'fill="{{{fill}}}" {extra}>{escape(value)}</text>')
 
 
-def svg(width: int, height: int, title: str, description: str, body: str, theme: str) -> str:
+def svg(width: int, height: int, title: str, description: str, body: str, theme: str,
+        background_motion: bool = False) -> str:
+    background = ""
+    if background_motion:
+        colors = ";".join(BACKGROUNDS[theme])
+        background = (f'<rect id="background-fade" class="moving" width="{width}" height="{height}" '
+                      'rx="18" fill="{bg}"><animate attributeName="fill" '
+                      f'values="{colors}" dur="16s" repeatCount="indefinite" '
+                      'calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" '
+                      'keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"/></rect>')
     content = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
                f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">'
                f'<title id="title">{escape(title)}</title><desc id="desc">{escape(description)}</desc>'
                '<style>@media(prefers-reduced-motion:reduce){.moving{display:none}}</style>'
-               f'<rect width="{width}" height="{height}" rx="18" fill="{{bg}}"/>{body}</svg>\n')
+               f'<rect width="{width}" height="{height}" rx="18" fill="{{bg}}"/>{background}{body}</svg>\n')
     for key, color in THEMES[theme].items():
         content = content.replace("{" + key + "}", color)
     return content
@@ -78,7 +91,8 @@ def hero(theme: str, mobile: bool = False, animated: bool = True) -> str:
         body += network(620, 30, animated=animated)
         body += '<path d="M37 214H100" stroke="{accent}" stroke-width="3"/>'
     return svg(w, h, "Marek Horváth, PhD", "Assistant Professor at TUKE and Software Engineer, "
-               "Košice, Slovakia. Decorative animated network; reduced-motion preference is respected.", body, theme)
+               "Košice, Slovakia. Background colors fade in a 16-second loop alongside an animated network; "
+               "reduced-motion preference is respected.", body, theme, background_motion=animated)
 
 
 def button(key: str, theme: str) -> str:
